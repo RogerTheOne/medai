@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { OAuth2Client } from 'google-auth-library';
-import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
-
-const prisma = new PrismaClient();
+import prisma from '../lib/prisma';
 
 export const googleLogin = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -101,6 +99,38 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
     console.error("Google Login Error:", error);
     res.status(500).json({
       error: { code: "INTERNAL_ERROR", message: "服务器内部错误" }
+    });
+  }
+};
+
+// GET /api/v1/auth/me
+export const getMe = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.userId },
+    });
+
+    if (!user) {
+      res.status(401).json({
+        error: { code: 'UNAUTHORIZED', message: '用户不存在' },
+      });
+      return;
+    }
+
+    res.status(200).json({
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        avatarUrl: user.avatar_url,
+        createdAt: user.created_at,
+        updatedAt: user.updated_at,
+      },
+    });
+  } catch (error) {
+    console.error('GetMe Error:', error);
+    res.status(500).json({
+      error: { code: 'INTERNAL_ERROR', message: '服务器内部错误' },
     });
   }
 };
