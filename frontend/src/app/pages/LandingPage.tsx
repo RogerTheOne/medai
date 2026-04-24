@@ -2,8 +2,12 @@ import { Link } from "react-router";
 import { Activity, MessageSquare, Clock, ShieldCheck, MapPin, Navigation, Loader2, Check, Zap, Shield, Menu } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion } from "motion/react";
+import { useAuth } from "../context/AuthContext";
+import { UserMenu } from "../components/UserMenu";
 
 export function LandingPage() {
+  const { user } = useAuth();
+
   return (
     <div className="min-h-screen flex flex-col bg-white">
       {/* Sticky Top Navigation */}
@@ -59,18 +63,15 @@ export function LandingPage() {
 
             {/* CTA Buttons */}
             <div className="flex items-center gap-3">
-              <Link to="/login" className="hidden md:block">
-                <button className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors px-4 py-2">
-                  Log In
-                </button>
-              </Link>
-              <Link to="/register">
-                <Button 
-                  className="rounded-full px-6 h-10 bg-primary hover:bg-primary/90 transition-all hover:shadow-lg hover:-translate-y-0.5"
-                >
-                  Get Started
-                </Button>
-              </Link>
+              {user ? (
+                <UserMenu />
+              ) : (
+                <Link to="/login">
+                  <Button className="rounded-full px-6 h-10 bg-primary hover:bg-primary/90 transition-all hover:shadow-lg hover:-translate-y-0.5">
+                    Get Started
+                  </Button>
+                </Link>
+              )}
               <button className="md:hidden">
                 <Menu className="w-6 h-6 text-gray-700" />
               </button>
@@ -157,7 +158,7 @@ export function LandingPage() {
 
           {/* CTA Buttons */}
           <div className="flex items-center justify-center gap-4 pt-4">
-            <Link to="/register">
+            <Link to="/login">
               <motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -177,20 +178,7 @@ export function LandingPage() {
                 </Button>
               </motion.div>
             </Link>
-            <Link to="/login">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="rounded-full px-8 h-12 border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 text-base transition-all"
-                >
-                  Log In
-                </Button>
-              </motion.div>
-            </Link>
+            
           </div>
         </motion.div>
       </div>
@@ -209,7 +197,7 @@ export function LandingPage() {
             >
               <motion.div 
                 className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 relative overflow-hidden"
-                whileHover={{ y: -4, shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
+                whileHover={{ y: -4 }}
                 transition={{ duration: 0.3 }}
               >
                 {/* Chat Header */}
