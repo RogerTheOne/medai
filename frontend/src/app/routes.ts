@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { createBrowserRouter } from "react-router";
 import { LandingPage } from "./pages/LandingPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -6,6 +7,11 @@ import { ChatPage } from "./pages/ChatPage";
 import { PharmacyPage } from "./pages/PharmacyPage";
 import { PricingPage } from "./pages/PricingPage";
 import { AboutPage } from "./pages/AboutPage";
+import { AuthCallbackPage } from "./pages/AuthCallbackPage";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+
+const protect = (page: React.ReactElement) =>
+  createElement(ProtectedRoute, null, page);
 
 export const router = createBrowserRouter([
   {
@@ -21,12 +27,16 @@ export const router = createBrowserRouter([
     Component: RegisterPage,
   },
   {
+    path: "/auth/callback",
+    Component: AuthCallbackPage,
+  },
+  {
     path: "/chat",
-    Component: ChatPage,
+    element: protect(createElement(ChatPage)),
   },
   {
     path: "/pharmacy",
-    Component: PharmacyPage,
+    element: protect(createElement(PharmacyPage)),
   },
   {
     path: "/pricing",

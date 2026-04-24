@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { Activity } from "lucide-react";
 // Google Icon Component
 function GoogleIcon() {
@@ -14,18 +14,24 @@ function GoogleIcon() {
 }
 
 export function LoginPage() {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGoogleLogin = () => {
     setIsLoading(true);
-    
-    // Simulate OAuth flow
-    setTimeout(() => {
-      // In a real app, this would redirect to Google OAuth
-      // For this prototype, we'll just navigate to chat
-      navigate("/chat");
-    }, 1000);
+
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = `${window.location.origin}/auth/callback`;
+
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: redirectUri,
+      response_type: "code",
+      scope: "openid email profile",
+      access_type: "offline",
+      prompt: "select_account",
+    });
+
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
   };
 
   return (
