@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Activity, Plus, Send, ChevronDown, MessageSquare, Loader2 } from "lucide-react";
+import { Activity, Plus, Send, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+import { UserMenu } from "../components/UserMenu";
 
 interface Message {
   id: string;
@@ -121,9 +116,9 @@ export function ChatPage() {
               <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
                 <Activity className="w-5 h-5 text-white" />
               </div>
-              <span className="font-semibold text-gray-900">HealthAI</span>
+              <span className="font-semibold text-gray-900">MedAI Advisor</span>
             </Link>
-            
+
             <div className="flex items-center gap-6">
               <Link to="/chat" className="text-sm font-medium text-primary">
                 Chat
@@ -134,22 +129,7 @@ export function ChatPage() {
             </div>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="flex items-center gap-2 rounded-lg">
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <span className="text-sm font-medium text-primary">JD</span>
-                </div>
-                <ChevronDown className="w-4 h-4 text-gray-500" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem>Profile Settings</DropdownMenuItem>
-              <DropdownMenuItem>Medical History</DropdownMenuItem>
-              <DropdownMenuItem>Privacy Settings</DropdownMenuItem>
-              <DropdownMenuItem className="text-red-600">Log Out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <UserMenu />
         </div>
       </nav>
 
