@@ -4,9 +4,13 @@ import { Activity, Plus, Send, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
 import { UserMenu } from "../components/UserMenu";
+
 import { useAuth } from "../context/AuthContext";
 
-interface ApiMessage {
+
+
+interface Message {
+
   id: string;
   role: "user" | "assistant";
   content: string;
