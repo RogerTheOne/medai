@@ -18,51 +18,28 @@ export function LandingPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo + Name */}
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                <Activity className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-semibold text-gray-900 text-lg">MedAI Advisor</span>
-            </Link>
-
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-8">
-              <Link 
-                to="/" 
-                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-              >
-                Home
-              </Link>
-              <Link 
-                to="/chat" 
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Chat
-              </Link>
-              <Link 
-                to="/pharmacy" 
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Pharmacy
-              </Link>
-              <Link
-                to="/pricing"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                Pricing
-              </Link>
-              <Link
-                to="/about"
-                className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
-              >
-                About
+          <div className="flex items-center">
+            {/* Logo + Name — fixed width left */}
+            <div className="flex-1">
+              <Link to="/" className="flex items-center gap-2.5 group w-fit">
+                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                  <Activity className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-semibold text-gray-900 text-lg">MedAI Advisor</span>
               </Link>
             </div>
 
-            {/* CTA Buttons */}
-            <div className="flex items-center gap-3">
+            {/* Navigation Links — truly centered */}
+            <div className="hidden md:flex items-center gap-8">
+              <Link to="/" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">Home</Link>
+              <Link to="/chat" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">Chat</Link>
+              <Link to="/pharmacy" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">Pharmacy</Link>
+              <Link to="/pricing" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">Pricing</Link>
+              <Link to="/about" className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors">About</Link>
+            </div>
+
+            {/* CTA — fixed width right, aligned to end */}
+            <div className="flex-1 flex items-center justify-end gap-3">
               {user ? (
                 <UserMenu />
               ) : (
@@ -158,13 +135,13 @@ export function LandingPage() {
 
           {/* CTA Buttons */}
           <div className="flex items-center justify-center gap-4 pt-4">
-            <Link to="/login">
+            <Link to={user ? "/chat" : "/login"}>
               <motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="rounded-full px-8 h-12 bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-base shadow-lg shadow-purple-500/30 hover:shadow-xl hover:shadow-purple-600/40 transition-all"
                 >
                   Get Started

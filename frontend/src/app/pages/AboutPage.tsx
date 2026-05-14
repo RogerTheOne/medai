@@ -3,6 +3,8 @@ import { Activity, Heart, Shield, Zap, Lock, Users, ArrowRight, Star, CheckCircl
 import { Button } from "../components/ui/button";
 import { motion } from "motion/react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import { useAuth } from "../context/AuthContext";
+import { UserMenu } from "../components/UserMenu";
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -100,6 +102,7 @@ const trustItems = [
 ];
 
 export function AboutPage() {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen flex flex-col bg-white overflow-x-hidden">
       {/* Ambient Background Animations */}
@@ -156,13 +159,15 @@ export function AboutPage() {
         transition={{ duration: 0.5 }}
       >
         <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                <Activity className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-semibold text-gray-900 text-lg">MedAI Advisor</span>
-            </Link>
+          <div className="flex items-center">
+            <div className="flex-1">
+              <Link to="/" className="flex items-center gap-2.5 group w-fit">
+                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                  <Activity className="w-5 h-5 text-white" />
+                </div>
+                <span className="font-semibold text-gray-900 text-lg">MedAI Advisor</span>
+              </Link>
+            </div>
             <div className="hidden md:flex items-center gap-8">
               {NAV_LINKS.map((l) => (
                 <Link
@@ -178,17 +183,16 @@ export function AboutPage() {
                 </Link>
               ))}
             </div>
-            <div className="flex items-center gap-3">
-              <Link to="/login" className="hidden md:block">
-                <button className="text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors px-4 py-2">
-                  Log In
-                </button>
-              </Link>
-              <Link to="/register">
-                <Button className="rounded-full px-6 h-10 bg-primary hover:bg-primary/90 transition-all hover:shadow-lg hover:-translate-y-0.5">
-                  Get Started
-                </Button>
-              </Link>
+            <div className="flex-1 flex items-center justify-end gap-3">
+              {user ? (
+                <UserMenu />
+              ) : (
+                <Link to="/login">
+                  <Button className="rounded-full px-6 h-10 bg-primary hover:bg-primary/90 transition-all hover:shadow-lg hover:-translate-y-0.5">
+                    Get Started
+                  </Button>
+                </Link>
+              )}
               <button className="md:hidden">
                 <Menu className="w-6 h-6 text-gray-700" />
               </button>
