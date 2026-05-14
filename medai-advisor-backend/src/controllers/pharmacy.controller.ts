@@ -11,13 +11,13 @@ export const nearbyPharmacies = async (req: Request, res: Response): Promise<voi
     const limit = Math.min(Number(req.query.limit) || 20, 50);
 
     if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-      res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'lat/lng 参数无效' } });
+      res.status(400).json({ error: { code: 'VALIDATION_ERROR', message: 'lat/lng invalid' } });
       return;
     }
 
     const apiKey = process.env.GOOGLE_PLACES_API_KEY;
     if (!apiKey) {
-      res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: 'Google Places API Key 未配置' } });
+      res.status(500).json({ error: { code: 'INTERNAL_ERROR', message: 'Google Places API Key did no set up' } });
       return;
     }
 
